@@ -35,6 +35,12 @@ export const ResultCard: React.FC<ResultCardProps> = ({ analysis, language }) =>
     }
   };
 
+  const handleShare = () => {
+    const text = `*RafikiMeds Instructions*\n\n💊 *Medicine:* ${analysis.medicineName}\n📝 *Purpose:* ${analysis.purpose}\n🔢 *Dose:* ${analysis.dosage}\n⏰ *When:* ${analysis.frequency}\n⚠️ *Warnings:* ${analysis.warnings.join(', ')}\n\n_Translated to ${language}_`;
+    const url = `https://wa.me/?text=${encodeURIComponent(text)}`;
+    window.open(url, '_blank');
+  };
+
   return (
     <div className="w-full max-w-md bg-white rounded-2xl shadow-xl overflow-hidden border border-green-100">
       {/* Header Section */}
@@ -52,24 +58,36 @@ export const ResultCard: React.FC<ResultCardProps> = ({ analysis, language }) =>
         </div>
       </div>
 
-      {/* Audio Button */}
-      <button 
-        onClick={handlePlayAudio}
-        disabled={isLoadingAudio}
-        className="w-full bg-green-50 hover:bg-green-100 text-green-800 font-semibold py-3 px-6 flex items-center justify-center gap-2 transition-colors border-b border-green-100"
-      >
-        {isLoadingAudio ? (
-          <svg className="animate-spin h-5 w-5 text-green-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+      {/* Action Buttons Grid */}
+      <div className="grid grid-cols-2 border-b border-green-100">
+        <button 
+          onClick={handlePlayAudio}
+          disabled={isLoadingAudio}
+          className="bg-green-50 hover:bg-green-100 text-green-800 font-semibold py-3 px-4 flex items-center justify-center gap-2 transition-colors border-r border-green-100"
+        >
+          {isLoadingAudio ? (
+            <svg className="animate-spin h-5 w-5 text-green-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+          ) : (
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
+            </svg>
+          )}
+          {isLoadingAudio ? "Loading..." : "Listen"}
+        </button>
+
+        <button 
+          onClick={handleShare}
+          className="bg-white hover:bg-gray-50 text-green-700 font-semibold py-3 px-4 flex items-center justify-center gap-2 transition-colors"
+        >
+          <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-8.683-2.031-9.667-.272-.984-.472-1.486-.447-.866.025.619.124.074.372 1.287.248 1.213 1.412 2.291 2.898 2.291 1.486.025 1.486.124 2.291.372 3.528.248 1.237.693 1.237 1.14 1.136.445.099 2.698-1.114 3.069-2.129.371-1.015.371-1.015.271-1.164z"/>
           </svg>
-        ) : (
-          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
-          </svg>
-        )}
-        {isLoadingAudio ? "Generating Audio..." : "Listen to Instructions"}
-      </button>
+          Share
+        </button>
+      </div>
 
       {/* Content Section */}
       <div className="p-6 space-y-6">

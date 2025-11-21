@@ -6,6 +6,8 @@ export enum Language {
 }
 
 export interface MedicationAnalysis {
+  id: string;
+  timestamp: number;
   medicineName: string;
   purpose: string;
   dosage: string;
