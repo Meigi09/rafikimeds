@@ -1,0 +1,7 @@
+{
+  "name": "RafikiMeds - Visual Dosage Guide",
+  "description": "A simplified medical assistant for East Africa. Upload a photo of a medicine box or prescription, and get clear, translated instructions (Kinyarwanda, Swahili, English, French) with audio support for those who cannot read.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
